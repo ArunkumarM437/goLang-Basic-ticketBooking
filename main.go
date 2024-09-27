@@ -51,6 +51,7 @@ func main() {
 			remainingTickets = bookTickets(userTickets, remainingTickets)
 			fmt.Println("-------------------------------------Ticket Summary-------------------------------------")
 			fmt.Printf("\n\tCustomer Name :%v \n \tTickets Booked : %v \n \tAvailable tickets after booking  :%v\n \tTickets sent to e-mail : %v\n \tContact-No : %v\n \tPostal-Code %v\n", bookingUsers[0], userTickets, remainingTickets, email, mobile, zipcode)
+			fmt.Println("Happy Ticket Bokking...")
 			if remainingTickets == 0 {
 				fmt.Println("Conference is full,Try next year...")
 				break
