@@ -10,6 +10,10 @@ func bookTickets(userTickets uint, remainingTickets uint) uint {
 	fmt.Println("Booking Completed...")
 	return remainingTickets
 }
+func getCost(userTickets int) int {
+	ticketCost := userTickets * 299
+	return ticketCost
+}
 
 // implement features in features branch
 func main() {
@@ -21,13 +25,14 @@ func main() {
 	var zipcode int
 	var mobile uint
 	var userTickets uint
+	var ticketCost int
 	// Use Slices to handle the user details to store everyone's details
 	const totalTickets = 100
 	var remainingTickets uint = 100
 	var bookingUsers []string //Dynamic array is called as slices
 	for remainingTickets > 0 {
 		fmt.Printf("Hi Greeting From %v Team :\n", conferenceName) //Greet Customer
-		//Get User Details via function
+		//Get User Details via function needs to implement
 		fmt.Println("Enter your first name : ")
 		fmt.Scan(&firstName)
 		fmt.Println("Enter your last name : ")
@@ -47,19 +52,21 @@ func main() {
 		//ticketBooking Logic
 		fmt.Println("Enter number of ticket to be booked:")
 		fmt.Scan(&userTickets) //use if conditionals to handle 0 to outOfRange tickets to book
-		if userTickets <= remainingTickets {
+		ticketCost = getCost(int(userTickets))
+		if userTickets < remainingTickets {
 			remainingTickets = bookTickets(userTickets, remainingTickets)
 			fmt.Println("-------------------------------------Ticket Summary-------------------------------------")
-			fmt.Printf("\n\tCustomer Name :%v \n \tTickets Booked : %v \n \tAvailable tickets after booking  :%v\n \tTickets sent to e-mail : %v\n \tContact-No : %v\n \tPostal-Code %v\n", bookingUsers[0], userTickets, remainingTickets, email, mobile, zipcode)
+			fmt.Printf("\n\tCustomer Name :%v \n \tTickets Booked : %v \n \tAvailable tickets after booking  :%v\n \tTickets sent to e-mail : %v\n \tContact-No : %v\n \tPostal-Code %v\n \tTotalCost : %v\n", bookingUsers[0], userTickets, remainingTickets, email, mobile, zipcode, ticketCost)
 			fmt.Println("Happy Ticket Bokking...")
 			if remainingTickets == 0 {
 				fmt.Println("Conference is full,Try next year...")
 				break
 			}
+		} else if userTickets == remainingTickets {
+			fmt.Printf("You cannot book all tickets once ...\n")
 		} else {
 			fmt.Printf("We only have %v remaining,you can't book %v tickets...\n", remainingTickets, userTickets)
 			fmt.Print("Booking Failed...Try Again\n")
 		}
 	}
-
 }
