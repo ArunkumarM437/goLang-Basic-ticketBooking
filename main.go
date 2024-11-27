@@ -57,6 +57,15 @@ func main() {
 		//Try user to select a normal seat or premium seats based on their need.
 		fmt.Println("Enter 1 for Normal Seat  or 2 for Premium Seat :")
 		fmt.Scan(&seatType)
+		for {
+			if seatType == 1 || seatType == 2 {
+				break
+			} else {
+				fmt.Println("Invalid Seat Selection")
+				fmt.Println("Enter 1 for Normal Seat  or 2 for Premium Seat :")
+				fmt.Scan(&seatType)
+			}
+		}
 		switch seatType {
 		case 1:
 			fmt.Println("Normal Seat Selected")
