@@ -27,7 +27,7 @@ func main() {
 	var mobile uint
 	var userTickets uint
 	var ticketCost int
-	var seatType int
+	var seatType string
 	// Use Slices to handle the user details to store everyone's details
 	const totalTickets = 100
 	var remainingTickets uint = 100
@@ -55,23 +55,23 @@ func main() {
 		fmt.Println("Enter number of ticket to be booked:")
 		fmt.Scan(&userTickets) //use if conditionals to handle 0 to outOfRange tickets to book
 		//Try user to select a normal seat or premium seats based on their need.
-		fmt.Println("Enter 1 for Normal Seat  or 2 for Premium Seat :")
+		fmt.Println("Enter N for Normal Seat  or P for Premium Seat :")
 		fmt.Scan(&seatType)
 		for {
-			if seatType == 1 || seatType == 2 {
+			if seatType == "N" || seatType == "P" {
 				break
 			} else {
 				fmt.Println("Invalid Seat Selection")
-				fmt.Println("Enter 1 for Normal Seat  or 2 for Premium Seat :")
+				fmt.Println("Enter N for Normal Seat  or P for Premium Seat (Case-Sensitive) :")
 				fmt.Scan(&seatType)
 			}
 		}
 		switch seatType {
-		case 1:
+		case "N":
 			fmt.Println("Normal Seat Selected")
 			ticketCost = 199
 			ticketCost = getCost(int(userTickets), ticketCost)
-		case 2:
+		case "P":
 			fmt.Println("Premium Seat Selected")
 			ticketCost = 299
 			ticketCost = getCost(int(userTickets), ticketCost)
@@ -87,11 +87,12 @@ func main() {
 				fmt.Println("Conference is full,Try next year...")
 				break
 			}
-		} else if userTickets == remainingTickets {
+		} else if userTickets == totalTickets {
 			fmt.Printf("You cannot book all tickets once ...\n")
+			fmt.Print("Booking Failed...Try Again\n")
+
 		} else {
 			fmt.Printf("We only have %v remaining,you can't book %v tickets...\n", remainingTickets, userTickets)
-			fmt.Print("Booking Failed...Try Again\n")
 		}
 	}
 }
