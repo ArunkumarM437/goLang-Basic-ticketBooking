@@ -38,6 +38,7 @@ func main() {
 	const totalTickets = 100
 	var remainingTickets uint = totalTickets
 	var bookingUsers []string //Dynamic array is called as slices
+	var counter int = 0
 	for remainingTickets > 0 {
 		fmt.Printf("Hi Greeting From %v Team :\n", conferenceName) //Greet Customer
 		//Get User Details via function needs to implement
@@ -54,7 +55,7 @@ func main() {
 		//Dynamic Array slices usage
 		bookingUsers = append(bookingUsers, firstName+" "+lastName)
 		// Notifying user about about ticket details
-		fmt.Printf("\n%v Welcome to ticket booking!\n", bookingUsers[0])
+		fmt.Printf("\n%v Welcome to ticket booking!\n", bookingUsers[counter])
 		fmt.Printf("Total number of tickets %v remaining are %v\n", totalTickets, remainingTickets)
 		fmt.Println("Grab your tickets before it solds out")
 		//ticketBooking Logic
@@ -98,7 +99,8 @@ func main() {
 			}
 			remainingTickets = bookTickets(userTickets, remainingTickets)
 			fmt.Println("-------------------------------------Ticket Summary-------------------------------------")
-			fmt.Printf("\n\tCustomer Name :%v \n \tTickets Booked : %v \n \tAvailable tickets after booking  :%v\n \tTickets sent to e-mail : %v\n \tContact-No : %v\n \tPostal-Code %v\n \tTotalCost : %v\n", bookingUsers, userTickets, remainingTickets, email, mobile, zipcode, ticketCost)
+			fmt.Printf("\n\tCustomer Name :%v \n \tTickets Booked : %v \n \tAvailable tickets after booking  :%v\n \tTickets sent to e-mail : %v\n \tContact-No : %v\n \tPostal-Code %v\n \tTotalCost : %v\n", bookingUsers[counter], userTickets, remainingTickets, email, mobile, zipcode, ticketCost)
+			counter += 1
 			fmt.Println("Happy Ticket Bokking...")
 			if remainingTickets == 0 {
 				fmt.Println("Conference is full,Try next year...")
