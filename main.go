@@ -4,6 +4,11 @@ import (
 	"fmt"
 )
 
+//	Planning for future development
+//
+// To-Do for Tommorow
+// Connect MonogoDB or some other
+// Check Tax is generating correct or not.
 // currently the user can able to book more number of tickets but they need only to book limited number of tickets use some logic to make this possible and store ticket details in MongoDB
 // single user limit is 6 Tickets implement this user booking logic before bookTickets function
 func bookTickets(userTickets uint, remainingTickets uint) uint {
