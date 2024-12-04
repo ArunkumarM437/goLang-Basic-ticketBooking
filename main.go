@@ -36,7 +36,7 @@ func main() {
 	// Conference data and collection of bookings
 	var totatEarnings float32
 	// Use Slices to handle the user details to store everyone's details
-	const totalTickets = 10
+	const totalTickets = 100
 	var remainingTickets uint = totalTickets
 	var bookingUsers []string //Dynamic array is called as slices
 	var counter int = 0
