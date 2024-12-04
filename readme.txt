@@ -6,3 +6,5 @@ you'll be ahead of most of the people's
 
 
  To run Go in local machine
+
+Download Go Lang respective os and open your terminal where you go project resides and go run main.go will run you go lang.
