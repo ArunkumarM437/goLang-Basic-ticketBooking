@@ -12,14 +12,15 @@ func bookTickets(userTickets uint, remainingTickets uint) uint {
 	fmt.Println("Booking Completed...")
 	return remainingTickets
 }
-func getCost(userTickets int, price int) int {
+func getCost(userTickets uint, price float32) float32 {
 	//get Ticket Cost for differenet type of Ticket booking
-	price = price * userTickets
+	price = price * float32(userTickets)
 	return price
 }
 
 // implement features in features branch
 func main() {
+
 	conferenceName := "GoLang Training Conference"
 	//user data
 	var firstName string
@@ -28,14 +29,14 @@ func main() {
 	var zipcode int
 	var mobile uint
 	var userTickets uint
-	var ticketCost int
+	var ticketCost float32
 	var seatType string
 	var validBooking bool
-
+	var taxAmount float32
 	// Conference data and collection of bookings
-	var totatEarnings int
+	var totatEarnings float32
 	// Use Slices to handle the user details to store everyone's details
-	const totalTickets = 100
+	const totalTickets = 10
 	var remainingTickets uint = totalTickets
 	var bookingUsers []string //Dynamic array is called as slices
 	var counter int = 0
@@ -79,7 +80,7 @@ func main() {
 					break
 				} else {
 					fmt.Println("Invalid Seat Selection")
-					fmt.Println("Enter N for Normal Seat  or P for Premium Seat (Case-Sensitive) :")
+					fmt.Println("Enter N for Normal Seat - No Tax  or P for Premium Seat Includes Tax (Case-Sensitive) :")
 					fmt.Scan(&seatType)
 				}
 			}
@@ -87,12 +88,14 @@ func main() {
 			case "N":
 				fmt.Println("Normal Seat Selected")
 				ticketCost = 199
-				ticketCost = getCost(int(userTickets), ticketCost)
+				ticketCost = getCost(userTickets, ticketCost)
 				totatEarnings += ticketCost
 			case "P":
 				fmt.Println("Premium Seat Selected")
 				ticketCost = 299
-				ticketCost = getCost(int(userTickets), ticketCost)
+				taxAmount = (2.5 / ticketCost) * 100
+				fmt.Printf("Tax For Selceted Seat : %v\n", taxAmount)
+				ticketCost = getCost(userTickets, ticketCost+taxAmount)
 				totatEarnings += ticketCost
 			default:
 				fmt.Println("Invalid Seat Selection")
