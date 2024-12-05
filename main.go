@@ -1,7 +1,11 @@
 package main
 
 import (
+	// "context"
 	"fmt"
+	// "go.mongodb.org/mongo-driver/mongo"
+    // "go.mongodb.org/mongo-driver/mongo/options"
+    // "go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 var conferenceName = "GoLang Training Conference"
@@ -10,8 +14,10 @@ var lastName string
 var email string
 var zipcode int
 var mobile uint
+
 //	Planning for future development
-//
+
+//	Do user save and tickets saved in DB.
 // To-Do for Tommorow
 // Connect MonogoDB or some other
 // Check Tax is generating correct or not.
@@ -102,8 +108,8 @@ func main() {
 			case "P":
 				fmt.Println("Premium Seat Selected")
 				ticketCost = 299
-				taxAmount = (2.5 / ticketCost) * 100
-				fmt.Printf("Tax For Selceted Seat : %v\n", taxAmount)
+				taxAmount = (ticketCost * 2.5) / 100
+				fmt.Printf("Tax For Selceted Seat : %v\n", taxAmount )
 				ticketCost = getCost(userTickets, ticketCost+taxAmount)
 				totatEarnings += ticketCost
 			default:
@@ -113,7 +119,7 @@ func main() {
 			fmt.Println("-------------------------------------Ticket Summary-------------------------------------")
 			fmt.Printf("\n\tCustomer Name :%v \n \tTickets Booked : %v \n \tAvailable tickets after booking  :%v\n \tTickets sent to e-mail : %v\n \tContact-No : %v\n \tPostal-Code %v\n \tTotalCost : %v\n", bookingUsers[counter], userTickets, remainingTickets, email, mobile, zipcode, ticketCost)
 			counter += 1
-			fmt.Println("Happy Ticket Bokking...")
+			fmt.Println("Happy Ticket Booking...")
 			if remainingTickets == 0 {
 				fmt.Println("Conference is full,Try next year...")
 				break
