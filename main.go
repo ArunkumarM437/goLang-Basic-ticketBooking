@@ -4,6 +4,12 @@ import (
 	"fmt"
 )
 
+var conferenceName = "GoLang Training Conference"
+var firstName string
+var lastName string
+var email string
+var zipcode int
+var mobile uint
 //	Planning for future development
 //
 // To-Do for Tommorow
@@ -11,6 +17,7 @@ import (
 // Check Tax is generating correct or not.
 // currently the user can able to book more number of tickets but they need only to book limited number of tickets use some logic to make this possible and store ticket details in MongoDB
 // single user limit is 6 Tickets implement this user booking logic before bookTickets function
+
 func bookTickets(userTickets uint, remainingTickets uint) uint {
 	fmt.Println("Processing....")
 	remainingTickets = remainingTickets - userTickets
@@ -22,17 +29,24 @@ func getCost(userTickets uint, price float32) float32 {
 	price = price * float32(userTickets)
 	return price
 }
-
+func getUserDetails(){
+	fmt.Printf("Hi Greeting From %v Team :\n", conferenceName) //Greet Customer
+		//Get User Details via function needs to implement
+	fmt.Println("Enter your first name : ")
+	fmt.Scan(&firstName)
+	fmt.Println("Enter your last name : ")
+	fmt.Scan(&lastName)
+	fmt.Println("Enter your email : ")
+	fmt.Scan(&email)
+	fmt.Println("Enter your mobile : ")
+	fmt.Scan(&mobile)
+	fmt.Println("Enter your postal-code : ")
+	fmt.Scan(&zipcode)
+}
 // implement features in features branch
 func main() {
 
-	conferenceName := "GoLang Training Conference"
 	//user data
-	var firstName string
-	var lastName string
-	var email string
-	var zipcode int
-	var mobile uint
 	var userTickets uint
 	var ticketCost float32
 	var seatType string
@@ -46,19 +60,9 @@ func main() {
 	var bookingUsers []string //Dynamic array is called as slices
 	var counter int = 0
 	for remainingTickets > 0 {
-		fmt.Printf("Hi Greeting From %v Team :\n", conferenceName) //Greet Customer
-		//Get User Details via function needs to implement
-		fmt.Println("Enter your first name : ")
-		fmt.Scan(&firstName)
-		fmt.Println("Enter your last name : ")
-		fmt.Scan(&lastName)
-		fmt.Println("Enter your email : ")
-		fmt.Scan(&email)
-		fmt.Println("Enter your mobile : ")
-		fmt.Scan(&mobile)
-		fmt.Println("Enter your postal-code : ")
-		fmt.Scan(&zipcode)
 		//Dynamic Array slices usage
+		getUserDetails()
+
 		bookingUsers = append(bookingUsers, firstName+" "+lastName)
 		// Notifying user about about ticket details
 		fmt.Printf("\n%v Welcome to ticket booking!\n", bookingUsers[counter])
