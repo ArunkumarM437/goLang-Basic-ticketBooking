@@ -30,6 +30,7 @@ func bookTickets(userTickets uint, remainingTickets uint) uint {
 	fmt.Println("Booking Completed...")
 	return remainingTickets
 }
+
 func getCost(userTickets uint, price float32) float32 {
 	//get Ticket Cost for differenet type of Ticket booking
 	price = price * float32(userTickets)
