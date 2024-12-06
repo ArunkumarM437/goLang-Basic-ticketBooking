@@ -4,8 +4,8 @@ import (
 	// "context"
 	"fmt"
 	// "go.mongodb.org/mongo-driver/mongo"
-    // "go.mongodb.org/mongo-driver/mongo/options"
-    // "go.mongodb.org/mongo-driver/mongo/readpref"
+	// "go.mongodb.org/mongo-driver/mongo/options"
+	// "go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 var conferenceName = "GoLang Training Conference"
@@ -21,8 +21,6 @@ var mobile uint
 // To-Do for Tommorow
 // Connect MonogoDB or some other
 // Do future analysis
-// currently the user can able to book more number of tickets but they need only to book limited number of tickets use some logic to make this possible and store ticket details in MongoDB
-// single user limit is 6 Tickets implement this user booking logic before bookTickets function
 
 func bookTickets(userTickets uint, remainingTickets uint) uint {
 	fmt.Println("Processing....")
@@ -36,9 +34,9 @@ func getCost(userTickets uint, price float32) float32 {
 	price = price * float32(userTickets)
 	return price
 }
-func getUserDetails(){
+func getUserDetails() {
 	fmt.Printf("Hi Greeting From %v Team :\n", conferenceName) //Greet Customer
-		//Get User Details via function needs to implement
+	//Get User Details via function needs to implement
 	fmt.Println("Enter your first name : ")
 	fmt.Scan(&firstName)
 	fmt.Println("Enter your last name : ")
@@ -50,6 +48,7 @@ func getUserDetails(){
 	fmt.Println("Enter your postal-code : ")
 	fmt.Scan(&zipcode)
 }
+
 // implement features in features branch
 func main() {
 
@@ -110,7 +109,7 @@ func main() {
 				fmt.Println("Premium Seat Selected")
 				ticketCost = 299
 				taxAmount = (ticketCost * 2.5) / 100
-				fmt.Printf("Tax For Selceted Seat : %v\n", taxAmount )
+				fmt.Printf("Tax For Selceted Seat : %v\n", taxAmount)
 				ticketCost = getCost(userTickets, ticketCost+taxAmount)
 				totatEarnings += ticketCost
 			default:
