@@ -1,11 +1,13 @@
 package main
 
 import (
-	// "context"
+	"context"
 	"fmt"
-	// "go.mongodb.org/mongo-driver/mongo"
-	// "go.mongodb.org/mongo-driver/mongo/options"
-	// "go.mongodb.org/mongo-driver/mongo/readpref"
+	"os"
+
+	"github.com/joho/godotenv"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var conferenceName = "GoLang Training Conference"
@@ -21,6 +23,7 @@ var mobile uint
 // To-Do for Tommorow
 // Connect MonogoDB or some other
 // Do future analysis
+// Decide a client Archietecture for this TicketBooking System.
 
 func bookTickets(userTickets uint, remainingTickets uint) uint {
 	fmt.Println("Processing....")
@@ -48,11 +51,35 @@ func getUserDetails() {
 	fmt.Println("Enter your postal-code : ")
 	fmt.Scan(&zipcode)
 }
+func connectMongoDB(uri string) {
+	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
+	opts := options.Client().ApplyURI(uri).SetServerAPIOptions(serverAPI)
+	client, err := mongo.Connect(context.TODO(), opts)
+
+	if err != nil {
+		fmt.Println("Something worong with MongoDB.")
+		panic(err)
+	} else {
+		fmt.Println("Mongo connected.")
+	}
+	defer func() {
+		if err = client.Disconnect(context.TODO()); err != nil {
+			panic(err)
+		}
+	}()
+}
 
 // implement features in features branch
 func main() {
-
-	//user data
+	//Dot-Env File Handling
+	err := godotenv.Load(".env")
+	if err != nil {
+		fmt.Println("NOenv File.")
+	} else {
+		fmt.Println("Got your .env")
+	}
+	mongo_uri := os.Getenv("MONGO_DB_URI")
+	connectMongoDB(mongo_uri)
 	var userTickets uint
 	var ticketCost float32
 	var seatType string
