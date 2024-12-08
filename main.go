@@ -21,9 +21,11 @@ var mobile uint
 
 //	Do user save and tickets saved in DB.
 // To-Do for Tommorow
-// Connect MonogoDB or some other
+// Connect MonogoDB or some other (Done Connection)
 // Do future analysis
+// Right now it is handling the booking of ticket instead of this make sure to Make a menu list user can navigate to book ticket and Cancel ticket...and so on
 // Decide a client Archietecture for this TicketBooking System.
+//Studied about MVC pattern
 
 func bookTickets(userTickets uint, remainingTickets uint) uint {
 	fmt.Println("Processing....")
@@ -161,5 +163,5 @@ func main() {
 	}
 	fmt.Printf("Total Earning's after Bookings :%v\n", totatEarnings)
 	fmt.Println("Total User Bookings:", len(bookingUsers))
-	fmt.Println("Thank You...Mikka Nandri...Arigato Gosaimasu")
+	fmt.Println("Mikka Nandri...Thank You...Arigato Gosaimasu")
 }
