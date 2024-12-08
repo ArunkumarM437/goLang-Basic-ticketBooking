@@ -16,6 +16,7 @@ var lastName string
 var email string
 var zipcode int
 var mobile uint
+var teamName string
 
 //	Planning for future development
 
@@ -52,6 +53,8 @@ func getUserDetails() {
 	fmt.Scan(&mobile)
 	fmt.Println("Enter your postal-code : ")
 	fmt.Scan(&zipcode)
+	fmt.Println("Enter your  teamName :")
+	fmt.Scan(&teamName)
 }
 func connectMongoDB(uri string) {
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
