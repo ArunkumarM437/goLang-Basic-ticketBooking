@@ -33,6 +33,7 @@ var mobile uint
 var client *mongo.Client
 var collection *mongo.Collection
 var ctx = context.TODO()
+var teamName string
 
 //	Planning for future development
 
@@ -80,6 +81,8 @@ func getUserDetails() {
 	fmt.Scan(&mobile)
 	fmt.Println("Enter your postal-code : ")
 	fmt.Scan(&zipcode)
+	fmt.Println("Enter your  teamName :")
+	fmt.Scan(&teamName)
 }
 func connectMongoDB(uri string) {
 	clientOptions := options.Client().ApplyURI(uri)
