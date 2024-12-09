@@ -10,12 +10,29 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+// Data model
+type Users struct {
+	userFirstName string `bson:"firstName,omitempty"`
+	userLastName  string `bson:"lastName,omitempty"`
+	userEmail     string `bson:"email,omitempty"`
+	UserZipCode   uint   `bson:"zipCode,omitempty"`
+	UserMobile    uint   `bson:"mobile,omitempty"`
+}
+
+// type Tickets struct{
+
+// }
+
 var conferenceName = "GoLang Training Conference"
+
 var firstName string
 var lastName string
 var email string
-var zipcode int
+var zipcode uint
 var mobile uint
+var client *mongo.Client
+var collection *mongo.Collection
+var ctx = context.TODO()
 var teamName string
 
 //	Planning for future development
@@ -35,6 +52,17 @@ func bookTickets(userTickets uint, remainingTickets uint) uint {
 	return remainingTickets
 }
 
+func storeUserInDB() {
+	collection = client.Database("TickeBooking").Collection("booking_Users")
+	newUser := Users{userFirstName: firstName, userLastName: lastName, userEmail: email, UserZipCode: zipcode, UserMobile: mobile}
+
+	result, err := collection.InsertOne(ctx, newUser)
+	if err != nil {
+		panic(err)
+	} else {
+		fmt.Printf("User Added with Object_Id:%v", result.InsertedID)
+	}
+}
 func getCost(userTickets uint, price float32) float32 {
 	//get Ticket Cost for differenet type of Ticket booking
 	price = price * float32(userTickets)
@@ -57,10 +85,8 @@ func getUserDetails() {
 	fmt.Scan(&teamName)
 }
 func connectMongoDB(uri string) {
-	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
-	opts := options.Client().ApplyURI(uri).SetServerAPIOptions(serverAPI)
-	client, err := mongo.Connect(context.TODO(), opts)
-
+	clientOptions := options.Client().ApplyURI(uri)
+	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
 		fmt.Println("Something worong with MongoDB.")
 		panic(err)
@@ -151,6 +177,7 @@ func main() {
 			fmt.Println("-------------------------------------Ticket Summary-------------------------------------")
 			fmt.Printf("\n\tCustomer Name :%v \n \tTickets Booked : %v \n \tAvailable tickets after booking  :%v\n \tTickets sent to e-mail : %v\n \tContact-No : %v\n \tPostal-Code %v\n \tTotalCost : %v\n", bookingUsers[counter], userTickets, remainingTickets, email, mobile, zipcode, ticketCost)
 			counter += 1
+			storeUserInDB()
 			fmt.Println("Happy Ticket Booking...")
 			if remainingTickets == 0 {
 				fmt.Println("Conference is full,Try next year...")
