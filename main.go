@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -12,11 +13,12 @@ import (
 
 // Data model
 type Users struct {
-	userFirstName string `bson:"firstName,omitempty"`
-	userLastName  string `bson:"lastName,omitempty"`
-	userEmail     string `bson:"email,omitempty"`
-	UserZipCode   uint   `bson:"zipCode,omitempty"`
-	UserMobile    uint   `bson:"mobile,omitempty"`
+	userFirstName string    `bson:"firstName"`
+	userLastName  string    `bson:"lastName"`
+	userEmail     string    `bson:"email"`
+	UserZipCode   uint      `bson:"zipCode,omitempty"`
+	UserMobile    uint      `bson:"mobile,omitempty"`
+	createdAt     time.Time `bson:"createdAt"`
 }
 
 // type Tickets struct{
@@ -32,7 +34,7 @@ var zipcode uint
 var mobile uint
 var client *mongo.Client
 var collection *mongo.Collection
-var ctx = context.TODO()
+var ctx = context.Background()
 var teamName string
 
 //	Planning for future development
@@ -53,14 +55,14 @@ func bookTickets(userTickets uint, remainingTickets uint) uint {
 }
 
 func storeUserInDB() {
-	collection = client.Database("TickeBooking").Collection("booking_Users")
-	newUser := Users{userFirstName: firstName, userLastName: lastName, userEmail: email, UserZipCode: zipcode, UserMobile: mobile}
-
+	collection = client.Database("Ticket-Booking-GoLang").Collection("booking_Users")
+	newUser := Users{userFirstName: firstName, userLastName: lastName, userEmail: email, UserZipCode: zipcode, UserMobile: mobile, createdAt: time.Now()}
+	fmt.Print("USER:%v\n", newUser)
 	result, err := collection.InsertOne(ctx, newUser)
 	if err != nil {
 		panic(err)
 	} else {
-		fmt.Printf("User Added with Object_Id:%v", result.InsertedID)
+		fmt.Printf("User Added with Object_Id:%v\n", result.InsertedID)
 	}
 }
 func getCost(userTickets uint, price float32) float32 {
@@ -86,18 +88,16 @@ func getUserDetails() {
 }
 func connectMongoDB(uri string) {
 	clientOptions := options.Client().ApplyURI(uri)
-	client, err := mongo.Connect(ctx, clientOptions)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	var err error
+	client, err = mongo.Connect(ctx, clientOptions)
 	if err != nil {
-		fmt.Println("Something worong with MongoDB.")
-		panic(err)
-	} else {
-		fmt.Println("Mongo connected.")
+		fmt.Println("Failed to connect MongoDB")
+		return
 	}
-	defer func() {
-		if err = client.Disconnect(context.TODO()); err != nil {
-			panic(err)
-		}
-	}()
+	fmt.Println("Connected to MongoDB!")
 }
 
 // implement features in features branch
