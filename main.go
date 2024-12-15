@@ -40,12 +40,13 @@ var teamName string
 //	Planning for future development
 
 //	Do user save and tickets saved in DB.
-// To-Do for Tommorow
+// To-Do
 // Connect MonogoDB or some other (Done Connection)  // in DB Int values are storing but string values are not storing in DB Resolve this error.
 // Do future analysis
 // Right now it is handling the booking of ticket instead of this make sure to Make a menu list user can navigate to book ticket and Cancel ticket...and so on
 // Decide a client Archietecture for this TicketBooking System.
-//Studied about MVC pattern
+//Studied about MVC pattern 
+//Need to explore more features
 
 func bookTickets(userTickets uint, remainingTickets uint) uint {
 	fmt.Println("Processing....")
