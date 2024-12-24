@@ -13,12 +13,12 @@ import (
 
 // Data model
 type Users struct {
-	userFirstName string    `bson:"firstName"`
-	userLastName  string    `bson:"lastName"`
-	userEmail     string    `bson:"email"`
+	UserFirstName string    `bson:"firstName"`
+	UserLastName  string    `bson:"lastName"`
+	UserEmail     string    `bson:"email"`
 	UserZipCode   uint      `bson:"zipCode,omitempty"`
 	UserMobile    uint      `bson:"mobile,omitempty"`
-	createdAt     time.Time `bson:"createdAt"`
+	CreatedAt     time.Time `bson:"createdAt"`
 }
 
 // type Tickets struct{
@@ -34,7 +34,6 @@ var zipcode uint
 var mobile uint
 var client *mongo.Client
 var collection *mongo.Collection
-var ctx = context.Background()
 var teamName string
 
 //	Planning for future development
@@ -45,7 +44,7 @@ var teamName string
 // Do future analysis
 // Right now it is handling the booking of ticket instead of this make sure to Make a menu list user can navigate to book ticket and Cancel ticket...and so on
 // Decide a client Archietecture for this TicketBooking System.
-//Studied about MVC pattern 
+//Studied about MVC pattern
 //Need to explore more features
 // Need To Resolve The DB Error , Studying the DB Types in MongoDB
 
@@ -56,17 +55,28 @@ func bookTickets(userTickets uint, remainingTickets uint) uint {
 	return remainingTickets
 }
 
-func storeUserInDB() {
-	collection = client.Database("Ticket-Booking-GoLang").Collection("booking_Users")
-	newUser := Users{userFirstName: firstName, userLastName: lastName, userEmail: email, UserZipCode: zipcode, UserMobile: mobile, createdAt: time.Now()}
-	fmt.Print("USER:%v\n", newUser)
-	result, err := collection.InsertOne(ctx, newUser)
+func storeUserInDB(db string, table string) {
+	collection = client.Database(db).Collection(table)
+	newUser := Users{
+		UserFirstName: firstName,
+		UserLastName:  lastName,
+		UserEmail:     email,
+		UserZipCode:   zipcode,
+		UserMobile:    mobile,
+		CreatedAt:     time.Now(),
+	}
+
+	fmt.Printf("USER GOING TO DB:%v\n", newUser)
+
+	// Insert into MongoDB
+	result, err := collection.InsertOne(context.Background(), newUser)
 	if err != nil {
 		panic(err)
 	} else {
 		fmt.Printf("User Added with Object_Id:%v\n", result.InsertedID)
 	}
 }
+
 func getCost(userTickets uint, price float32) float32 {
 	//get Ticket Cost for differenet type of Ticket booking
 	price = price * float32(userTickets)
@@ -112,6 +122,8 @@ func main() {
 		fmt.Println("Got your .env")
 	}
 	mongo_uri := os.Getenv("MONGO_DB_URI")
+	mongo_db := os.Getenv("DB_HOST")
+	userTable := os.Getenv("MONGO_DB_USER_TABLE")
 	connectMongoDB(mongo_uri)
 	var userTickets uint
 	var ticketCost float32
@@ -179,7 +191,7 @@ func main() {
 			fmt.Println("-------------------------------------Ticket Summary-------------------------------------")
 			fmt.Printf("\n\tCustomer Name :%v \n \tTickets Booked : %v \n \tAvailable tickets after booking  :%v\n \tTickets sent to e-mail : %v\n \tContact-No : %v\n \tPostal-Code %v\n \tTotalCost : %v\n", bookingUsers[counter], userTickets, remainingTickets, email, mobile, zipcode, ticketCost)
 			counter += 1
-			storeUserInDB()
+			storeUserInDB(mongo_db, userTable)
 			fmt.Println("Happy Ticket Booking...")
 			if remainingTickets == 0 {
 				fmt.Println("Conference is full,Try next year...")
