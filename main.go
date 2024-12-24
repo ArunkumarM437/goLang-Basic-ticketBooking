@@ -55,7 +55,7 @@ func bookTickets(userTickets uint, remainingTickets uint) uint {
 }
 
 func storeUserInDB(db string, table string) {
-	collection := client.Database(db).Collection(table)
+	collection = client.Database(db).Collection(table)
 	newUser := Users{
 		UserFirstName: firstName,
 		UserLastName:  lastName,
