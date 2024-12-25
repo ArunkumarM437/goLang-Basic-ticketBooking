@@ -130,6 +130,7 @@ func main() {
 	var seatType string
 	var validBooking bool
 	var taxAmount float32
+	var taxValue = 3.5
 	// Conference data and collection of bookings
 	var totatEarnings float32
 	// Use Slices to handle the user details to store everyone's details
@@ -180,7 +181,7 @@ func main() {
 			case "P":
 				fmt.Println("Premium Seat Selected")
 				ticketCost = 299
-				taxAmount = (ticketCost * 2.5) / 100
+				taxAmount = (ticketCost * float32(taxValue)) / 100
 				fmt.Printf("Tax For Selceted Seat : %v\n", taxAmount)
 				ticketCost = getCost(userTickets, ticketCost+taxAmount)
 				totatEarnings += ticketCost
