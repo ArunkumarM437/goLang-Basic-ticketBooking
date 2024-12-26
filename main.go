@@ -54,9 +54,18 @@ func bookTickets(userTickets uint, remainingTickets uint) uint {
 	fmt.Println("Booking Completed...")
 	return remainingTickets
 }
-
+func getUserFromDB(db string, table string, name string) {
+	collection := client.Database(db).Collection(table)
+	// Find a document
+	var result Users
+	err := collection.FindOne(context.Background(), name).Decode(&result)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("User Found:%v\n", result)
+}
 func storeUserInDB(db string, table string) {
-	collection = client.Database(db).Collection(table)
+	collection := client.Database(db).Collection(table)
 	newUser := Users{
 		UserFirstName: firstName,
 		UserLastName:  lastName,
@@ -134,7 +143,7 @@ func main() {
 	// Conference data and collection of bookings
 	var totatEarnings float32
 	// Use Slices to handle the user details to store everyone's details
-	const totalTickets = 100
+	const totalTickets = 7
 	var remainingTickets uint = totalTickets
 	var bookingUsers []string //Dynamic array is called as slices
 	var counter int = 0
@@ -206,6 +215,8 @@ func main() {
 			fmt.Printf("We only have %v remaining,you can't book %v tickets...\n", remainingTickets, userTickets)
 		}
 	}
+	name := bookingUsers[0]
+	getUserFromDB(mongo_db, userTable, name)
 	fmt.Printf("Total Earning's after Bookings :%v\n", totatEarnings)
 	fmt.Println("Total User Bookings:", len(bookingUsers))
 	fmt.Println("Mikka Nandri...Thank You...Arigato Gosaimasu")
