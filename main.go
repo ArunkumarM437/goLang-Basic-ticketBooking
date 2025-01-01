@@ -46,7 +46,8 @@ var teamName string
 // Decide a client Archietecture for this TicketBooking System.
 //Studied about MVC pattern
 //Need to explore more features
-// Need To Resolve The DB Error , Studying the DB Types in MongoDB
+// Need To Resolve The DB Error , Studying the DB Types in MongoDB 
+//Do something about storing the Ticket Details in DB.
 
 func bookTickets(userTickets uint, remainingTickets uint) uint {
 	fmt.Println("Processing....")
