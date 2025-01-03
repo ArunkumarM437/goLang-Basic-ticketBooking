@@ -48,6 +48,7 @@ var teamName string
 //Need to explore more features
 // Need To Resolve The DB Error , Studying the DB Types in MongoDB 
 //Do something about storing the Ticket Details in DB.
+//Get some details about new features which will be used in this application.
 
 func bookTickets(userTickets uint, remainingTickets uint) uint {
 	fmt.Println("Processing....")
