@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -111,6 +112,16 @@ func connectMongoDB(uri string) {
 	}
 	fmt.Println("Connected to MongoDB!")
 }
+func getUserFromDB(db string, table string) {
+	collection = client.Database(db).Collection(table)
+	// findOptions := options.Find()
+	result, err := collection.Find(context.Background(), bson.D{{}})
+	if err != nil {
+		panic(err)
+	} else {
+		fmt.Printf("User Added with Object_Id:%v\n", result)
+	}
+}
 
 // implement features in features branch
 func main() {
@@ -134,7 +145,7 @@ func main() {
 	// Conference data and collection of bookings
 	var totatEarnings float32
 	// Use Slices to handle the user details to store everyone's details
-	const totalTickets = 100
+	const totalTickets = 10
 	var remainingTickets uint = totalTickets
 	var bookingUsers []string //Dynamic array is called as slices
 	var counter int = 0
@@ -206,6 +217,7 @@ func main() {
 			fmt.Printf("We only have %v remaining,you can't book %v tickets...\n", remainingTickets, userTickets)
 		}
 	}
+	getUserFromDB(mongo_db, userTable)
 	fmt.Printf("Total Earning's after Bookings :%v\n", totatEarnings)
 	fmt.Println("Total User Bookings:", len(bookingUsers))
 	fmt.Println("Mikka Nandri...Thank You...Arigato Gosaimasu")
