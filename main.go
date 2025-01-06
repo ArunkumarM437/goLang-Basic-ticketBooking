@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -55,16 +56,6 @@ func bookTickets(userTickets uint, remainingTickets uint) uint {
 	remainingTickets = remainingTickets - userTickets
 	fmt.Println("Booking Completed...")
 	return remainingTickets
-}
-func getUserFromDB(db string, table string, name string) {
-	collection := client.Database(db).Collection(table)
-	// Find a document
-	var result Users
-	err := collection.FindOne(context.Background(), name).Decode(&result)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("User Found:%v\n", result)
 }
 func storeUserInDB(db string, table string) {
 	collection := client.Database(db).Collection(table)
@@ -122,6 +113,16 @@ func connectMongoDB(uri string) {
 	}
 	fmt.Println("Connected to MongoDB!")
 }
+func getUserFromDB(db string, table string) {
+	collection = client.Database(db).Collection(table)
+	// findOptions := options.Find()
+	result, err := collection.Find(context.Background(), bson.D{{}})
+	if err != nil {
+		panic(err)
+	} else {
+		fmt.Printf("User Added with Object_Id:%v\n", result)
+	}
+}
 
 // implement features in features branch
 func main() {
@@ -145,7 +146,7 @@ func main() {
 	// Conference data and collection of bookings
 	var totatEarnings float32
 	// Use Slices to handle the user details to store everyone's details
-	const totalTickets = 7
+	const totalTickets = 10
 	var remainingTickets uint = totalTickets
 	var bookingUsers []string //Dynamic array is called as slices
 	var counter int = 0
@@ -217,8 +218,7 @@ func main() {
 			fmt.Printf("We only have %v remaining,you can't book %v tickets...\n", remainingTickets, userTickets)
 		}
 	}
-	name := bookingUsers[0]
-	getUserFromDB(mongo_db, userTable, name)
+	getUserFromDB(mongo_db, userTable)
 	fmt.Printf("Total Earning's after Bookings :%v\n", totatEarnings)
 	fmt.Println("Total User Bookings:", len(bookingUsers))
 	fmt.Println("Mikka Nandri...Thank You...Arigato Gosaimasu")
