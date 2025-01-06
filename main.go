@@ -55,9 +55,18 @@ func bookTickets(userTickets uint, remainingTickets uint) uint {
 	fmt.Println("Booking Completed...")
 	return remainingTickets
 }
-
+func getUserFromDB(db string, table string, name string) {
+	collection := client.Database(db).Collection(table)
+	// Find a document
+	var result Users
+	err := collection.FindOne(context.Background(), name).Decode(&result)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("User Found:%v\n", result)
+}
 func storeUserInDB(db string, table string) {
-	collection = client.Database(db).Collection(table)
+	collection := client.Database(db).Collection(table)
 	newUser := Users{
 		UserFirstName: firstName,
 		UserLastName:  lastName,
