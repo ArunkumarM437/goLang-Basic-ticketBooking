@@ -41,13 +41,13 @@ var teamName string
 
 //	Do user save and tickets saved in DB.
 // To-Do
+// Make seperate files soon.
 // Connect MonogoDB or some other (Done Connection)  // in DB Int values are storing but string values are not storing in DB Resolve this error.
 // Do future analysis
 // Right now it is handling the booking of ticket instead of this make sure to Make a menu list user can navigate to book ticket and Cancel ticket...and so on
 // Decide a client Archietecture for this TicketBooking System.
 //Studied about MVC pattern
 //Need to explore more features
-// Need To Resolve The DB Error , Studying the DB Types in MongoDB 
 //Do something about storing the Ticket Details in DB.
 //Get some details about new features which will be used in this application.
 
